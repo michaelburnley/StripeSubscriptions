@@ -1,5 +1,6 @@
 require 'stripe'
 require 'yaml'
+require 'csv'
 # require 'open-uri'
 # require 'openssl'
 # require 'json'
@@ -9,7 +10,6 @@ require 'yaml'
 config = YAML.load_file('config.yml')
 client_url = 'https://api.stripe.com'
 Stripe.api_key = config[:API_KEY]
-# client_redirect_url = 'http://michaelburnley.com/wunderlistCSV.htm'
 ###### End Basic Config Information #####
 
 # Stripe::Customer.create(
@@ -17,16 +17,32 @@ Stripe.api_key = config[:API_KEY]
 #   :source => "tok_16RRpRC5mprcFNjzVmOcX2nl" # obtained with Stripe.js
 # )
 
-def CreateCustomer()
+stripeCustomer = Stripe::Customer.all(:limit => 3)
+ALLCUSTOMERS = stripeCustomer['data']
+
+def createCustomer()
 end
 
-def UpdateCustomer(body)
+def exportAllCustomers()
+	File.open("export.csv", 'w')
 	
 end
 
-allCustomers = Stripe::Customer.all(:limit => 3)
-customerID = allCustomers['data'][0]['id']
-cu = Stripe::Customer.retrieve(customerID)
-cu.email = "test@test.com"
-cu.save
-puts allCustomers['data']
+def updateCustomer(body)
+end
+
+def findCustomer(email)
+	selectedCustomer = ALLCUSTOMERS.select {|x| x['email'] == email}
+	customerID = selectedCustomer[0]['id']
+	return customerID
+end
+
+selectCustomer = findCustomer("test@test.com")
+puts selectCustomer
+
+
+# customerID = allCustomers['data'][0]['id']
+# cu = Stripe::Customer.retrieve(customerID)
+# cu.email = "test@test.com"
+# cu.save
+# puts allCustomers['data']
