@@ -25,19 +25,24 @@ end
 
 def exportAllCustomers()
 	File.open("export.csv", 'w')
-	
+
 end
 
 def updateCustomer(body)
 end
 
-def findCustomer(email)
-	selectedCustomer = ALLCUSTOMERS.select {|x| x['email'] == email}
-	customerID = selectedCustomer[0]['id']
-	return customerID
+# def findCustomer(email)
+# 	selectedCustomer = ALLCUSTOMERS.select {|x| x['email'] == email}
+# 	customerID = selectedCustomer[0]['id']
+# 	return customerID
+# end
+
+def findCustomerID(criteria, value)
+	selectedCustomer = ALLCUSTOMERS.select {|x| x["#{criteria}"] == value}
+	return selectedCustomer[0]['id']
 end
 
-selectCustomer = findCustomer("test@test.com")
+selectCustomer = findCustomerID("email","test@test.com")
 puts selectCustomer
 
 
