@@ -3,8 +3,7 @@ require 'yaml'
 require 'csv'
 # require 'open-uri'
 # require 'openssl'
-# require 'json'
-# require 'launchy'
+require 'json'
 
 ###### Basic Config Information #####
 config = YAML.load_file('config.yml')
